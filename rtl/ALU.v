@@ -1,19 +1,17 @@
-`timescale 1ns / 1ps
-
 module alu	(input [3:0] opcode,
 			input [31:0] A, B,
 			output carry, zero,
 			output reg [31:0] Y
 			);
 
-wire adderCarryOut;
+reg adderCarryOut;
 
 localparam	ADD = 4'b0000, SUB = 4'b0001, SLL = 4'b0010,
 			XOR = 4'b0011, SRL = 4'b0100, SRA = 4'b0101,
 			OR = 4'b0110, AND = 4'b0111, SLTU = 4'b1000,
 			BNE = 4'b1001, BEQ = 4'b1010, LUI = 4'b1011;
 
-always @ (opcode) begin
+always @ (*) begin
 	case(opcode)
 		ADD: {adderCarryOut, Y} = A + B;
 		SUB: Y = A - B;

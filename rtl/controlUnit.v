@@ -1,8 +1,6 @@
-`timescale 1ns / 1ps
-
 module controller	(input [31:0] instruction,
-		   			output aluSrc, branch, jump, memRd, memWrt, regWrt,
-		   			output [1:0] aluOp, memToreg);
+		   			output reg aluSrc, branch, jump, memRd, memWrt, regWrt,
+		   			output reg [1:0] aluOp, memToReg);
 
 /* iType instructions consists of bitwise operations, loads and JALR.
    Each sub type has its own OPCODE but the general iType instruction encoding is consistently followed.

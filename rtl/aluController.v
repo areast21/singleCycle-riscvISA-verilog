@@ -1,9 +1,8 @@
-`timescale 1ns / 1ps
-
 module aluController    (input funct7,
                         input [1:0] aluOp,
                         input [2:0] funct3,
-                        output [3:0] aluControl
+                        input [6:0] instrnOpcode,
+                        output reg [3:0] aluControl
                         );
                      
 localparam memoryInst = 2'b00, bitwiseOrShift = 2'b01,
@@ -21,9 +20,10 @@ always @ (*) begin
         memoryInst: 
             aluControl = 4'b0000;
         bitwiseOrShift:begin
-            if(funct7) begin
+            if(funct7 && instrnOpcode == 7'b0110011)
                 aluControl = (funct3 == 3'b101) ? 4'b0101 : 4'b0001;
-			end
+            else if(funct7 && funct3 == 3'b101 && instrnOpcode == 7'b0010011)
+                aluControl = 4'b0101;
 			else begin
                 case(funct3)
 				    3'b000: aluControl = 4'b0000;
